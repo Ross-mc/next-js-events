@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventContent from "../../components/event-detail/event-content";
+import ErrorAlert from "../../components/events/error-alert"
 import { getEventById } from "../../dummy-data";
 
 const Event = () => {
@@ -19,7 +20,11 @@ const Event = () => {
   const event = getEventById(router.query.eventid);
 
   if (!event){
-    return <p>No events found</p>
+    return <>
+    <ErrorAlert>
+    <p>No events found</p>
+    </ErrorAlert>
+    </>
   }
 
   return (
