@@ -6,7 +6,7 @@ const FilteredEvents = () => {
 
   return (
     <div>
-      <h1>FilteredEvents</h1>
+      <h1>Filtered Events</h1>
       <ul>
         {  router.query?.slug &&
           router.query.slug.map(slug => <li key={slug}>{slug}</li>)
