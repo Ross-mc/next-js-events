@@ -8,7 +8,7 @@ const EventItem = (props) => {
   const {title, image, date, location, id} = props;
   
   const newDate = new Date(date)
-  const parsedDate = newDate.toLocaleDateString(undefined, {
+  const parsedDate = newDate.toLocaleDateString("en-US", {
    day: "numeric",
    month: "long",
    year: "numeric"

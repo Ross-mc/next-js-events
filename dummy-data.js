@@ -15,7 +15,7 @@ const DUMMY_EVENTS = [
     description:
       "We know: Networking is no fun if you are an introvert person. That's why we came up with this event - it'll be so much easier. Promised!",
     location: 'New Wall Street 5, 98765 New Work',
-    date: '2021-05-30',
+    date: '2021-05-11',
     image: 'images/introvert-event.jpg',
     isFeatured: true,
   },
