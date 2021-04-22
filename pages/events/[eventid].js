@@ -34,8 +34,6 @@ const Event = () => {
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
-
-
     </>
   )
 }
