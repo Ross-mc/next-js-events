@@ -30,7 +30,12 @@ export const getStaticProps = async () => {
   return {
     props: {
       events: featuredEvents
-    }
+    },
+    revalidate: 1800
+    //revalidate tells the server how often to regenerate pages for a new request
+    //if it has been at least 30 minutes (1800 seconds) since/
+    //the last request then a regeneration of this page will occur and
+    //the events will be updated with the latest
   }
 
 }
