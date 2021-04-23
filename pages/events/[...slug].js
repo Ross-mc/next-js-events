@@ -19,10 +19,10 @@ const FilteredEvents = (props) => {
     return <p className="center">Loading...</p>
   }
 
-  const [filteredYear, filteredMonth] = filterData;
+  // const [filteredYear, filteredMonth] = filterData;
 
-  const numYear = parseInt(filteredYear);
-  const numMonth = parseInt(filteredMonth);
+  // const numYear = parseInt(filteredYear);
+  // const numMonth = parseInt(filteredMonth);
 
   // if (isNaN(numYear) || isNaN(numMonth) || numMonth < 1 || numMonth > 12){
   //   return (
@@ -66,7 +66,7 @@ const FilteredEvents = (props) => {
     )
   }
 
-  const date = new Date(numYear, numMonth - 1);
+  const date = new Date(props.numYear, props.numMonth - 1);
 
 
   return (
@@ -107,7 +107,9 @@ export const getServerSideProps = async (context) => {
   
   return {
     props:{
-      events
+      events,
+      numYear,
+      numMonth
     }
   }
 }
