@@ -28,9 +28,9 @@ const Event = (props) => {
 
   if (!event || event.length === 0){
     return <>
-    <ErrorAlert>
-    <p>No events found</p>
-    </ErrorAlert>
+    <div className="center">
+    <p>No Events found</p>
+    </div>
     </>
   }
 
@@ -84,6 +84,11 @@ export const getStaticProps = async (context) => {
 //however I want to demonstrate to future Ross what happens
 //with fallback for valid data that doesnt have a path
 
+//the fallback can also be set to blocking, what this does it allows a page to fully render
+//before displaying
+//This means a slight hit to speed but if there are no events it will display
+//the no events message
+
 
 export const getStaticPaths = async () => {
   //we can also construct a paths array as so
@@ -92,12 +97,15 @@ export const getStaticPaths = async () => {
   //   return {params: {eventid: event.id}}
   // })
 
+  //for example, we could use getFeaturedEvents() instead and
+  //only pre generate featuredEvents with the above map
+
   return {
     paths: [
       {params: {eventid: "e1"}},
       {params: {eventid: "e2"}},
     ],
-    fallback: true
+    fallback: "blocking"
   }
 }
 
