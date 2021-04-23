@@ -61,7 +61,9 @@ export const getStaticProps = async (context) => {
   return {
     props: {
       event
-    }
+    },
+    revalidate: 600
+    //see ../index.js for revalidation comments
   }
 }
 
