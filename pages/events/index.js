@@ -1,11 +1,14 @@
 import { useRouter } from "next/router";
 import EventList from "../../components/events/EventList";
 import EventsSearch from "../../components/events/EventsSearch";
-import { getAllEvents } from "../../dummy-data";
+import { getAllEvents } from "../../API";
+import { useState } from "react";
 
 const Events = () => {
 
-  const allEvents = getAllEvents();
+  const [allEvents, setAllEvents] = useState([])
+
+  getAllEvents().then((res) => setAllEvents(res))
 
   const router = useRouter();
 
@@ -16,7 +19,7 @@ const Events = () => {
   return (
     <>
       <EventsSearch onSearch={findEventsHandler}/>
-      <EventList items={allEvents}/>
+      {allEvents.length > 0 ? <EventList items={allEvents}/> : <h1>Loading...</h1>}
     </>
   )
 }

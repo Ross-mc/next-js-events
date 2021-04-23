@@ -1,13 +1,15 @@
 import {useRouter} from "next/router"
 import EventList from "../../components/events/EventList";
-import { getFilteredEvents } from "../../dummy-data";
+import { getFilteredEvents } from "../../API";
 import ResultsTitle from "../../components/events/results-title"
 import Button from "../../components/ui/button";
 import ErrorAlert from "../../components/events/error-alert"
+import { useState } from "react";
 
 
 const FilteredEvents = () => {
   const router = useRouter();
+  const [filteredEvents, setFilteredEvents] = useState([])
 
   const filterData = router.query.slug;
 
@@ -35,10 +37,7 @@ const FilteredEvents = () => {
     )
   }
 
-  const filteredEvents = getFilteredEvents({
-    year: numYear,
-    month: numMonth
-  })
+  getFilteredEvents({year: numYear,month: numMonth}).then(res => setFilteredEvents(res))
 
   if (!filteredEvents || filteredEvents.length === 0){
     return (
