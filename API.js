@@ -1,6 +1,9 @@
 const getEventsFromFirebase = async () => {
-  const res = await fetch("https://next-js-events-a3fc2-default-rtdb.firebaseio.com/events.json");
+  const res = await fetch("https://next-js-events-a3fc2-default-rtdb.firebaseio.com/events2.json");
   const data = await res.json();
+  if (!data){
+    return []
+  }
   const events = [];
   for (const [key, value] of Object.entries(data)){
     events.push({...value, id: key})

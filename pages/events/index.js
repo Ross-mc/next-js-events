@@ -34,7 +34,16 @@ const Events = (props) => {
 //need a loading phase
 
 export const getStaticProps = async () => {
+  
   const events = await getAllEvents();
+
+  if (!events){
+    return {
+      props: {
+        events: []
+      }
+    }
+  }
 
   return {
     props: {
