@@ -7,9 +7,9 @@ import ErrorAlert from "../../components/events/error-alert"
 import { useState } from "react";
 
 
-const FilteredEvents = () => {
+const FilteredEvents = (props) => {
   const router = useRouter();
-  const [filteredEvents, setFilteredEvents] = useState([])
+  // const [filteredEvents, setFilteredEvents] = useState([])
 
   const filterData = router.query.slug;
 
@@ -24,8 +24,21 @@ const FilteredEvents = () => {
   const numYear = parseInt(filteredYear);
   const numMonth = parseInt(filteredMonth);
 
-  if (isNaN(numYear) || isNaN(numMonth) || numMonth < 1 || numMonth > 12){
-    return (
+  // if (isNaN(numYear) || isNaN(numMonth) || numMonth < 1 || numMonth > 12){
+  //   return (
+  //     <>
+  //       <ErrorAlert>
+  //       <p>Invalid Filter</p>
+  //       </ErrorAlert>
+  //       <div className="center">
+  //         <Button link="/events">Show All Events</Button>
+  //       </div>    
+  //     </>
+  //   )
+  // }
+
+  if (props.hasError){
+        return (
       <>
         <ErrorAlert>
         <p>Invalid Filter</p>
@@ -37,7 +50,8 @@ const FilteredEvents = () => {
     )
   }
 
-  getFilteredEvents({year: numYear,month: numMonth}).then(res => setFilteredEvents(res))
+  // getFilteredEvents({year: numYear,month: numMonth}).then(res => setFilteredEvents(res))
+  const filteredEvents = props.events
 
   if (!filteredEvents || filteredEvents.length === 0){
     return (
@@ -61,6 +75,41 @@ const FilteredEvents = () => {
       <EventList items={filteredEvents}/>
     </>
   )
+}
+
+export const getServerSideProps = async (context) => {
+
+  const {params} = context;
+
+  const [filteredYear, filteredMonth] = params.slug;
+
+  const numYear = parseInt(filteredYear);
+  const numMonth = parseInt(filteredMonth);
+
+  if (isNaN(numYear) || isNaN(numMonth) || numMonth < 1 || numMonth > 12){
+    return {
+      // notFound: true,
+      //redirect: {
+      //   destination: "/error"
+      // }
+      props: {
+        hasError: true
+      }
+    }
+  }
+
+  //with notFound true, our 404 page is show. we could also redirect to a predefined error page or use our own defined props to determine there was an error
+  // and handle that on the front end
+
+  const events = await getFilteredEvents({year: numYear,month: numMonth})
+
+
+  
+  return {
+    props:{
+      events
+    }
+  }
 }
 
 export default FilteredEvents
