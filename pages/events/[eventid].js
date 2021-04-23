@@ -4,7 +4,7 @@ import EventLogistics from "../../components/event-detail/event-logistics";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventContent from "../../components/event-detail/event-content";
 import ErrorAlert from "../../components/events/error-alert"
-import { getEventById } from "../../dummy-data";
+import { getEventById } from "../../API";
 
 const Event = () => {
   const router = useRouter();
@@ -17,9 +17,11 @@ const Event = () => {
   //     console.log(eventInState)
   // }, [])
 
-  const event = getEventById(router.query.eventid);
+  const [event, setEvent] = useState([]);
 
-  if (!event){
+  getEventById(router.query.eventid).then((res) => setEvent(res));
+
+  if (!event || event.length === 0){
     return <>
     <ErrorAlert>
     <p>No events found</p>
