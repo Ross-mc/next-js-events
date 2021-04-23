@@ -4,7 +4,7 @@ import EventLogistics from "../../components/event-detail/event-logistics";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventContent from "../../components/event-detail/event-content";
 import ErrorAlert from "../../components/events/error-alert"
-import { getEventById } from "../../API";
+import { getEventById, getAllEvents } from "../../API";
 
 const Event = (props) => {
   // const router = useRouter();
@@ -84,6 +84,12 @@ export const getStaticProps = async (context) => {
 
 
 export const getStaticPaths = async () => {
+  //we can also construct a paths array as so
+  //const events = await getAllEvents();
+  //const paths = events.map(event => {
+  //   return {params: {eventid: event.id}}
+  // })
+
   return {
     paths: [
       {params: {eventid: "e1"}},
