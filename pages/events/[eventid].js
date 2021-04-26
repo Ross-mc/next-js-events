@@ -29,6 +29,10 @@ const Event = (props) => {
 
   if (!event || event.length === 0){
     return <>
+          <Head>
+        <title>{`NextJS Events`}</title>
+        <meta name="description" content="Error: No events found for that query"/>
+      </Head>
     <div className="center">
     <p>No Events found</p>
     </div>
