@@ -3,6 +3,7 @@ import EventList from "../../components/events/EventList";
 import EventsSearch from "../../components/events/EventsSearch";
 import { getAllEvents } from "../../API";
 import { useState } from "react";
+import Head from "next/head";
 
 const Events = (props) => {
 
@@ -23,6 +24,10 @@ const Events = (props) => {
 
   return (
     <>
+      <Head>
+        <title>NextJS Events</title>
+        <meta name="description" content="All events related to programming"/>
+      </Head>
       <EventsSearch onSearch={findEventsHandler}/>
       {allEvents.length > 0 ? <EventList items={allEvents}/> : <h1 className="center">No Events. Please add some!</h1>}
     </>

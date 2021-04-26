@@ -5,6 +5,7 @@ import EventSummary from "../../components/event-detail/event-summary";
 import EventContent from "../../components/event-detail/event-content";
 import ErrorAlert from "../../components/events/error-alert"
 import { getEventById, getAllEvents } from "../../API";
+import Head from "next/head"
 
 const Event = (props) => {
   // const router = useRouter();
@@ -36,6 +37,10 @@ const Event = (props) => {
 
   return (
     <>
+      <Head>
+        <title>{`NextJS Events: ${event.title}`}</title>
+        <meta name="description" content={event.description}/>
+      </Head>
       <EventSummary title={event.title}/>
       <EventLogistics date={event.date} address={event.location} image={event.image} imageAlt={event.title}/>
       <EventContent>
