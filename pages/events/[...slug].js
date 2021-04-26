@@ -44,6 +44,10 @@ const FilteredEvents = (props) => {
   if (isNaN(numYear) || isNaN(numMonth) || numMonth < 1 || numMonth > 12 || error){
     return (
       <>
+        <Head>
+          <title>{`NextJS Events`}</title>
+          <meta name="description" content={`Invalid filter`}/>
+        </Head>
         <ErrorAlert>
         <p>Invalid Filter</p>
         </ErrorAlert>
