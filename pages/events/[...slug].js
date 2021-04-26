@@ -4,41 +4,44 @@ import { getFilteredEvents } from "../../API";
 import ResultsTitle from "../../components/events/results-title"
 import Button from "../../components/ui/button";
 import ErrorAlert from "../../components/events/error-alert"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useSWR from "swr"
 
 
 const FilteredEvents = (props) => {
   const router = useRouter();
-  // const [filteredEvents, setFilteredEvents] = useState([])
+  // const [filteredEvents, setFilteredEvents] = useState([]);
+  const [loadedEvents, setLoadedEvents] = useState([])
 
   const filterData = router.query.slug;
 
   //array
 
+  const { data, error } = useSWR("https://next-js-events-a3fc2-default-rtdb.firebaseio.com/events.json");
+
+  useEffect(() => {
+    if (data){
+      const events = [];
+      for (const [key, value] of Object.entries(data)){
+        events.push({...value, id: key})
+      };
+      setLoadedEvents(events)
+    }
+
+  }, [data])
+
+
   if (!filterData){
     return <p className="center">Loading...</p>
   }
 
-  // const [filteredYear, filteredMonth] = filterData;
+  const [filteredYear, filteredMonth] = filterData;
 
-  // const numYear = parseInt(filteredYear);
-  // const numMonth = parseInt(filteredMonth);
+  const numYear = parseInt(filteredYear);
+  const numMonth = parseInt(filteredMonth);
 
-  // if (isNaN(numYear) || isNaN(numMonth) || numMonth < 1 || numMonth > 12){
-  //   return (
-  //     <>
-  //       <ErrorAlert>
-  //       <p>Invalid Filter</p>
-  //       </ErrorAlert>
-  //       <div className="center">
-  //         <Button link="/events">Show All Events</Button>
-  //       </div>    
-  //     </>
-  //   )
-  // }
-
-  if (props.hasError){
-        return (
+  if (isNaN(numYear) || isNaN(numMonth) || numMonth < 1 || numMonth > 12 || error){
+    return (
       <>
         <ErrorAlert>
         <p>Invalid Filter</p>
@@ -50,8 +53,28 @@ const FilteredEvents = (props) => {
     )
   }
 
+  let filteredEvents = loadedEvents.filter((event) => {
+    const eventDate = new Date(event.date);
+    return eventDate.getFullYear() === numYear && eventDate.getMonth() === numMonth - 1;
+  });
+
+
+
+  // if (props.hasError){
+  //       return (
+  //     <>
+  //       <ErrorAlert>
+  //       <p>Invalid Filter</p>
+  //       </ErrorAlert>
+  //       <div className="center">
+  //         <Button link="/events">Show All Events</Button>
+  //       </div>    
+  //     </>
+  //   )
+  // }
+
   // getFilteredEvents({year: numYear,month: numMonth}).then(res => setFilteredEvents(res))
-  const filteredEvents = props.events
+  // const filteredEvents = props.events
 
   if (!filteredEvents || filteredEvents.length === 0){
     return (
@@ -66,7 +89,7 @@ const FilteredEvents = (props) => {
     )
   }
 
-  const date = new Date(props.numYear, props.numMonth - 1);
+  const date = new Date(numYear, numMonth - 1);
 
 
   return (
@@ -77,41 +100,45 @@ const FilteredEvents = (props) => {
   )
 }
 
-export const getServerSideProps = async (context) => {
+// ###########################################################################
 
-  const {params} = context;
+//we are using client side fetching, so we have removed the server side props for now
 
-  const [filteredYear, filteredMonth] = params.slug;
+// export const getServerSideProps = async (context) => {
 
-  const numYear = parseInt(filteredYear);
-  const numMonth = parseInt(filteredMonth);
+//   const {params} = context;
 
-  if (isNaN(numYear) || isNaN(numMonth) || numMonth < 1 || numMonth > 12){
-    return {
-      // notFound: true,
-      //redirect: {
-      //   destination: "/error"
-      // }
-      props: {
-        hasError: true
-      }
-    }
-  }
+//   const [filteredYear, filteredMonth] = params.slug;
 
-  //with notFound true, our 404 page is show. we could also redirect to a predefined error page or use our own defined props to determine there was an error
-  // and handle that on the front end
+//   const numYear = parseInt(filteredYear);
+//   const numMonth = parseInt(filteredMonth);
 
-  const events = await getFilteredEvents({year: numYear,month: numMonth})
+//   if (isNaN(numYear) || isNaN(numMonth) || numMonth < 1 || numMonth > 12){
+//     return {
+//       // notFound: true,
+//       //redirect: {
+//       //   destination: "/error"
+//       // }
+//       props: {
+//         hasError: true
+//       }
+//     }
+//   }
+
+//   //with notFound true, our 404 page is show. we could also redirect to a predefined error page or use our own defined props to determine there was an error
+//   // and handle that on the front end
+
+//   const events = await getFilteredEvents({year: numYear,month: numMonth})
 
 
   
-  return {
-    props:{
-      events,
-      numYear,
-      numMonth
-    }
-  }
-}
+//   return {
+//     props:{
+//       events,
+//       numYear,
+//       numMonth
+//     }
+//   }
+// }
 
 export default FilteredEvents

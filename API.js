@@ -36,6 +36,5 @@ export async function getFilteredEvents(dateFilter) {
 
 export async function getEventById(id) {
   const events = await getEventsFromFirebase()
-  console.log('the vents are:', events)
   return events.find((event) => event.id === id);
 }
