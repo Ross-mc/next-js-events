@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Head from "next/head";
 import EventList from "../components/events/EventList";
 import { getFeaturedEvents } from "../API"
 
@@ -17,6 +18,10 @@ const Home = (props) => {
 
   return (
     <div>
+      <Head>
+        <title>NextJS Events</title>
+        <meta name="description" content="find programming events"/>
+      </Head>
       <h1>Featured Events</h1>
       {props.events.length > 0 ? <EventList items={props.events}/> : <h1>Loading...</h1>}
       
