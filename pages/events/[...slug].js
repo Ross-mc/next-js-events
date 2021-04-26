@@ -6,6 +6,7 @@ import Button from "../../components/ui/button";
 import ErrorAlert from "../../components/events/error-alert"
 import { useState, useEffect } from "react";
 import useSWR from "swr"
+import Head from "next/head";
 
 
 const FilteredEvents = (props) => {
@@ -79,8 +80,12 @@ const FilteredEvents = (props) => {
   if (!filteredEvents || filteredEvents.length === 0){
     return (
       <>
-      <ErrorAlert>
-        <p>No events found</p>
+        <Head>
+          <title>{`NextJS Events`}</title>
+          <meta name="description" content={`No events found for the query`}/>
+        </Head>
+        <ErrorAlert>
+          <p>No events found</p>
         </ErrorAlert>
         <div className="center">
           <Button link="/events">Show All Events</Button>
@@ -90,11 +95,19 @@ const FilteredEvents = (props) => {
   }
 
   const date = new Date(numYear, numMonth - 1);
+  const humanReadableDate = date.toLocaleDateString('en-US', {
+    month: 'long',
+    year: 'numeric',
+  });
 
 
   return (
     <>
-    <ResultsTitle date={date}/>
+      <Head>
+        <title>{`NextJS Events in ${humanReadableDate}`}</title>
+        <meta name="description" content={`All NextJS events in ${humanReadableDate}`}/>
+      </Head>
+      <ResultsTitle date={date}/>
       <EventList items={filteredEvents}/>
     </>
   )
