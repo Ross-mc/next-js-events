@@ -7,3 +7,5 @@ export default function(req, res){
     res.status(400)
   }
 }
+
+//see the course docs for mongodb version

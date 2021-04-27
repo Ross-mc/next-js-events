@@ -9,9 +9,10 @@ export default function(req, res){
       name: req.body.name,
       eventId: eventId
     }).then(response => res.json(response))
-    //here we would actually send this to a DB
-    //but just demonstrating how the API feature works in next.js
+    //ideally we would add validation on the incoming request and also add a catch in a real prod env
   } else {
     res.status(400)
   }
 }
+
+//see the course docs for mongodb version
