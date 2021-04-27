@@ -6,6 +6,7 @@ import EventContent from "../../components/event-detail/event-content";
 import ErrorAlert from "../../components/events/error-alert"
 import { getEventById, getAllEvents } from "../../API";
 import Head from "next/head"
+import Comments from "../../components/input/comments";
 
 const Event = (props) => {
   // const router = useRouter();
@@ -50,6 +51,7 @@ const Event = (props) => {
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
+      <Comments eventId={event.id}/>
     </>
   )
 }

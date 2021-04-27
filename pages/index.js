@@ -2,6 +2,7 @@ import { useState } from "react";
 import Head from "next/head";
 import EventList from "../components/events/EventList";
 import { getFeaturedEvents } from "../API"
+import NewsletterRegistration from "../components/input/newsletter-registration";
 
 const Home = (props) => {
 
@@ -23,6 +24,7 @@ const Home = (props) => {
         <meta name="description" content="find programming events"/>
       </Head>
       <h1>Featured Events</h1>
+      <NewsletterRegistration />
       {props.events.length > 0 ? <EventList items={props.events}/> : <h1>Loading...</h1>}
       
     </div>
