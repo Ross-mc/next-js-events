@@ -5,7 +5,7 @@ export default function(req, res){
     console.log(eventId)
     //here we would actually send this to a DB
     //but just demonstrating how the API feature works in next.js
-    res.json({email: req.body.email, text: req.body.text, name: req.body.name})
+    res.json({email: req.body.email, text: req.body.text, name: req.body.name, eventId: eventId})
   } else {
     res.status(400)
   }

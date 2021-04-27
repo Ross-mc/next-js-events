@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import classes from './comment-list.module.css';
 
-function CommentList() {
+function CommentList({eventId}) {
   const [comments, setComments] = useState(null);
 
   useEffect(() => {
@@ -15,13 +15,16 @@ function CommentList() {
   const arrayFromObj = (data) => {
     const arr = [];
     for (const key in data){
-      arr.push({...data[key], id: key})
+      const currentObj = data[key];
+      if (currentObj.eventId === eventId){
+        arr.push({...currentObj, id: key})
+      }
     }
     return arr
   }
   return (
     <>
-      {comments ? (
+      {comments.length > 0 ? (
         <ul className={classes.comments}>
           {comments.map((comment) => (
             <li key={comment.id}>
@@ -32,7 +35,7 @@ function CommentList() {
             </li>
           ))}
         </ul>
-      ) : (
+      ) : comments ? <p>No Comments for this event</p> : (
         <p>Loading...</p>
       )}
     </>
