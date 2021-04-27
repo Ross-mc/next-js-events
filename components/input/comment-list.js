@@ -24,7 +24,7 @@ function CommentList({eventId}) {
   }
   return (
     <>
-      {comments.length > 0 ? (
+      {comments && comments.length > 0 ? (
         <ul className={classes.comments}>
           {comments.map((comment) => (
             <li key={comment.id}>
