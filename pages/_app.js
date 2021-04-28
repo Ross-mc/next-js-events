@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Layout from '../components/layout/Layout'
+import Notification from '../components/notification/notification'
 import '../styles/globals.css'
 
 //here we define a global head tag. This is overwritten if we specifically define the properties
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="description" content="An App for finding programming events"/>
       </Head>
       <Component {...pageProps} />
+      <Notification title="Test" message="this is a test" status="pending" />
     </Layout>
   )
 }
