@@ -1,15 +1,31 @@
-import { loadGetInitialProps } from "next/dist/next-server/lib/utils";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 const NotificationContext = createContext({
   notification: null,
-  showNotification: () => {},
+  showNotification: (notification) => {},
   hideNotification: () => {},
 });
 
 export const NotificationContextProvider = (props) => {
+  const [activeNotification, setActiveNotification] = useState(null);
+
+  const showNotificationHandler = (notification) => {
+    setActiveNotification(notification)
+  }
+
+  const hideNotificationHandler = () => {
+    setActiveNotification(null)
+  }
+
+  const context = {
+    notification: activeNotification,
+    showNotification: showNotificationHandler,
+    hideNotification: hideNotificationHandler
+  }
+
+
   return (
-    <NotificationContext.Provider>
+    <NotificationContext.Provider value={context}>
       {props.children}
     </NotificationContext.Provider>
   );
